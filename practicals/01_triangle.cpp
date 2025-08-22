@@ -25,17 +25,13 @@ public:
 	{
 		return a == b && b == c;
 	}
-	
-	void test()
-	{
-		cout << "Isosceles: " << isIsosceles() << endl;
-		cout << "Equilateral: " << isEquilateral() << endl;
-	}
 };
 
 int main()
 {
 	Triangle t(4, 4, 3);
-	t.test();
+	cout << "For triangle (4, 4, 3):" << endl;
+	cout << "Isosceles: " << (t.isIsosceles() ? "true" : "false") << endl;
+	cout << "Equilateral: " << (t.isEquilateral() ? "true" : "false") << endl;
 	return 0;
 }
