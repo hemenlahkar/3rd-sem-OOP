@@ -85,7 +85,7 @@ void showMenu(Bank &obj)
 	cout << "\nWelcome to H-Bank" << endl;
 	while(1)
 	{
-		cout << "\n[1] Desosit\n[2] Withdraw\n[3] Check Balance\n[4] Print A/C details\n[5] quit" << endl;
+		cout << "\n[1] Deposit\n[2] Withdraw\n[3] Check Balance\n[4] Print A/C details\n[5] quit" << endl;
 		cin >> option;
 		switch(option)
 		{
