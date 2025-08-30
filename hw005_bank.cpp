@@ -4,28 +4,20 @@
 
 using namespace std;
 
+int serial_no = 0;
+long long base_no = rand() % 10000LL * 1000000LL;
+
 class Bank{
 	string ac_holder_name, ac_no;
 	double balance;
-	long long base_no = rand() % 10000LL * 1000000LL, serial_no = 0;
 public:
-	Bank();
 	int withdraw();
 	int deposit();
 	void display();
 	double getBalance();
 	string getAcNo();
+	void createAccount();
 };
-
-Bank::Bank()
-{
-	cout << "Enter your name: ";
-	getline(cin, ac_holder_name);
-	balance = 0.0;
-	ac_no = to_string(base_no + ++serial_no);
-	cout << "Your account has been created with H-Bank." << endl;
-	cout << "Your a/c no.: " << ac_no << endl;
-}
 
 int Bank::withdraw()
 {
@@ -79,14 +71,15 @@ string Bank::getAcNo()
 	return ac_no;
 }
 
-void showMenu(Bank &obj)
+int showMenu(Bank &obj)
 {
 	int option;
 	cout << "\nWelcome to H-Bank" << endl;
 	while(1)
 	{
-		cout << "\n[1] Deposit\n[2] Withdraw\n[3] Check Balance\n[4] Print A/C details\n[5] quit" << endl;
+		cout << "\n[1] Deposit\n[2] Withdraw\n[3] Check Balance\n[4] Print A/C details\n[5] Logout\n[6] Quit" << endl;
 		cin >> option;
+		cin.ignore();
 		switch(option)
 		{
 			case 1:
@@ -96,13 +89,15 @@ void showMenu(Bank &obj)
 				obj.withdraw();
 				break;
 			case 3:
-				cout << "Current balance: " << obj.getBalance() << endl;
+				cout << "Current balance: $" << obj.getBalance() << endl;
 				break;
 			case 4:
 				obj.display();
 				break;
 			case 5:
-				return;
+				return 2;
+			case 6:
+				return 0;
 			default:
 				cout << "Invalid option entered. Please try again." << endl;
 	
@@ -111,9 +106,46 @@ void showMenu(Bank &obj)
 
 }
 
+void Bank::createAccount()
+{
+	cout << "Enter your name: ";
+	getline(cin, ac_holder_name);
+	balance = 0.0;
+	ac_no = to_string(base_no + ++serial_no);
+	cout << "Your account has been created successfully with H-Bank." << endl;
+	cout << "Your a/c no.: " << ac_no << endl;
+}
+
 int main()
 {
-	Bank b;
-	showMenu(b);
+	Bank b[10];
+	int no_of_users;
+	cout << "How many users are there? ";
+	cin >> no_of_users;
+	cin.ignore();
+	for(int i = 0; i < no_of_users; i++)
+		b[i].createAccount();
+	string ac_no_input;
+login:
+	cout << "\nEnter your account no: ";
+	getline(cin, ac_no_input);
+	if(ac_no_input.length() < 5)
+	{
+		cout << "Invalid a/c no.!!" << endl;
+		goto login;
+	}
+	int index = stoi(ac_no_input.substr(ac_no_input.length() - 4, 4)) - 1;
+	if(b[index].getAcNo() == ac_no_input)
+	{
+		cout << "You've successfully logged in." << endl;
+		if(showMenu(b[index]) == 2)
+			goto login;
+	}
+	else
+	{
+		cout << "No account found!!" << endl;
+		goto login;
+	}
+	
 	return 0;
 }
