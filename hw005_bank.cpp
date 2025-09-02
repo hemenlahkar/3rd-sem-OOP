@@ -24,13 +24,19 @@ int Bank::withdraw()
 	double amount;
 	cout << "Enter amount to be withdrawed: ";
 	cin >> amount;
-	if(amount < 0 || amount > balance)
+	if(amount < 0)
 	{
 		cout << "Invalid amount entered!!" << endl;
 		return 0;
 	}
+	if(amount > balance)
+	{
+		cout << "Insufficient balance!!" << endl;
+		return 0;
+	}
 	balance -= amount;
 	cout << "\nYour a/c XXXX" << ac_no.substr(ac_no.length() - 4, 4) << " has been debited with $" << amount << endl;
+	cout << "Your current balance: $" << balance << endl;
 	return 1;
 }
 
@@ -51,6 +57,7 @@ int Bank::deposit()
 	}
 	balance += amount;
 	cout << "\nYour a/c XXXX" << ac_no.substr(ac_no.length() - 4, 4) << " has been credited with $" << amount << endl;
+	cout << "Your current balance: $" << balance << endl;
 	return 1;
 }
 
