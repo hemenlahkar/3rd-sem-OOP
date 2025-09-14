@@ -62,6 +62,11 @@ public:
 		result.imag = this->imag * c.real + this->real * c.imag;
 		return result;
 	}
+	Complex operator - ()
+	{
+		Complex x(-this->real, -this->imag);
+		return x;
+	}
 	friend ostream& operator<<(ostream &output, Complex &c)
 	{
 		if(c.imag < 0)
